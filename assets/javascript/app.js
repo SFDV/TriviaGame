@@ -32,7 +32,7 @@ var Questions = [{
     answer: 0
 },{
     question: "What is the official term for a character who has a similar moveset to another character?",
-    answerList: ["Clone", "Mirror Fighter", "Echo Character", "Alts"],
+    answerList: ["Clone", "Mirror Character", "Echo Fighter", "Mii Fighter"],
     answer: 2
 },{
     question: "Who is here for the new Smash Bros.?",
@@ -50,17 +50,17 @@ var time;
 var userSelect;
 var message = {
     correct: "You are correct!",
-    incorrect: "Nope! The answer was " + answer + "!",
-    timeOver: "You ran out of time! The answer was" + answer + "!",
+    incorrect: "Nope!",
+    timeOver: "You ran out of time!",
     complete: "You're done! Let's see how you did!"
 }
 
-$("startBtn").on("click", function(){
+$("#startBtn").on("click", function(){
     $(this).hide();
     newGame();
 });
 
-$("startOverBtn").on("click", function(){
+$("#startOverBtn").on("click", function(){
     $(this).hide();
     newGame();
 });
@@ -79,14 +79,14 @@ function newGame(){
 
 function newQuestion(){
     $("#message").empty();
-    $("#correctAnswer").empty();
+    $("#correctedAnswer").empty();
     $("#gif").empty();
     answered = true;
 
 
     // makes new questions and answers
     $("#currentQuestion").html("Question #" + (currentQuestion+1) + "/" + Questions.length);
-    $(".question").html("<h2>" + Questions[currentQuestion].answerList[i]);
+    $(".question").html("<h2>" + Questions[currentQuestion].question + "</h2>");
     for (var i=0; i<4; i++) {
         var choices = $("<div>");
         choices.text(Questions[currentQuestion].answerList[i]);
@@ -104,6 +104,25 @@ function newQuestion(){
 
 }
 
+function countdown(){
+    seconds = 20;
+    $("#timeLeft").html("<h3>Time Remaining: " + seconds + "</h3>");
+    answered = true;
+    // Timer depletes
+    time = setInterval(showCountdown, 1000);
+
+}
+
+function showCountdown(){
+    seconds--;
+    $("#timeLeft").html('<h3>Time Remaining: ' + seconds + '</h3>')
+    if(seconds < 1){
+        clearInterval(time);
+        answered = false;
+        answerPage();
+    }
+}
+
 function answerPage(){
 $("#currentQuestion").empty();
 $(".thisChoice").empty();
@@ -111,14 +130,14 @@ $(".question").empty();
 
 var rightAnswerText = Questions[currentQuestion].answerList[Questions[currentQuestion].answer];
 var rightAnswerIndex = Questions[currentQuestion].answer;
-$("#gif").html('<img src = "assets/images/'+gifArray[currentQuestion]+'gif "width = "400px">');
+$("#gif").html('<img src = "assets/images/'+gifArray[currentQuestion]+'.gif "width = "400px">');
 //check answer
 if ((userSelect == rightAnswerIndex) && (answered == true)){
     rightAnswer++;
     $("#message").html(message.correct);
 } else if ((userSelect != rightAnswerIndex) && (answered == true)){
     wrongAnswer++;
-    $("#messages").html(message.incorrect);
+    $("#message").html(message.incorrect);
     $("#correctedAnswer").html("The correct answer was: " + rightAnswerText);
 } else{
     unanswered++;
@@ -128,7 +147,7 @@ if ((userSelect == rightAnswerIndex) && (answered == true)){
 }
 
 if (currentQuestion == (Questions.length-1)){
-    settimeout(scoreboard, 7000)
+    setTimeout(scoreboard, 5000)
 } else{
     currentQuestion++;
     setTimeout(newQuestion, 5000);
@@ -136,16 +155,16 @@ if (currentQuestion == (Questions.length-1)){
 }
 
 function scoreboard() {
-    $("#timeleft").empty();
+    $("#timeLeft").empty();
     $("#message").empty();
     $("#correctedAnswer").empty();
     $("#gif").empty();
 
     $("#finalMessage").html(message.complete);
-    $("#rightAnswers").hmtl(message.rightAnswer);
-    $("#wronngAnswers").hmtl(message.wrongAnswer);
-    $("#unanswered").hmtl(message.unanswered);
-    $("#startOvrButton").addClass('reset');
-    $("#startOvrButton").show();
-    $("#startOvrButton").html("Start Over?");
+    $("#rightAnswers").html("Correct Answers: " + rightAnswer);
+    $("#wrongAnswers").html("Incorrect Answers: " + wrongAnswer);
+    $("#unanswered").html("Unanswered: " + unanswered);
+    $("#startOverBtn").addClass('reset');
+    $("#startOverBtn").show();
+    $("#startOverBtn").html("Start Over?");
 }

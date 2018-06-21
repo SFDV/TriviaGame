@@ -4,16 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- Jquery -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="assets/css/style.css"></link>
-    <!-- Javascript -->
-    <link type="text/javascript" href="assets/javascript/app.js"></link>
     <title>Trivia Game</title>
 </head>
 <body>
-    <header></header>
+    <header>
+        <h1>Super Smash Bros. Trivia!!!</h1></h1>
+    </header>
     
+    <div class="container">
+        <button class='btn btn-primary' id='startBtn'>Start</button>
+        <!-- Question Page -->
+        <div id="timeLeft"></div>
+        <div id="currentQuestion"></div>
+        <div class="question"></div>
+        <div class="answerList"></div>
+        <!-- Answer Page -->
+        <div id="message"></div>
+        <div id="correctedAnswer"></div>
+        <div id="gif"></div>
+        <!-- Scoreboard -->
+        <div id ="finalMessage"></div>
+        <div id ="rightAnswers"></div>
+        <div id ="wrongAnswers"></div>
+        <div id ="unanswered"></div>
+        <div id ="startOverBtn"></div>
+    </div>
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script type="text/javascript" src="assets/javascript/app.js"></script>
 </body>
 </html>
